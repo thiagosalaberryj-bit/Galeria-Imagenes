@@ -1,4 +1,4 @@
-//las imagenes
+// lista de imagenes
 const imagenes = [
   "img/img1.jpg",
   "img/img2.jpg",
@@ -11,103 +11,74 @@ const imagenes = [
   "img/img9.jpg"
 ];
 
-// seleccionar elementos 
+// elementos
 const galeria = document.getElementById("galeria");
-const lightbox = document.getElementById("lightbox");
+const visor = document.getElementById("visor");
 const imagenGrande = document.getElementById("imagen-grande");
-const btnCerrar = document.getElementById("cerrar");
-const btnPrev = document.getElementById("prev");
-const btnNext = document.getElementById("next");
+const botonCerrar = document.getElementById("boton-cerrar");
+const botonAnterior = document.getElementById("boton-anterior");
+const botonSiguiente = document.getElementById("boton-siguiente");
 const contador = document.getElementById("contador");
 
-// indice actual de imagen
-let indiceActual = 0;
+// indice
+let indice = 0;
 
-// funcion para cargar imagenes en la galeria
-function cargarGaleria() {
-  imagenes.forEach((ruta, index) => {
-    const img = document.createElement("img");
-    img.src = ruta;
-    img.alt = "imagen " + (index + 1);
+// cargar imagenes
+imagenes.forEach((ruta, i) => {
+  const img = document.createElement("img");
+  img.src = ruta;
 
-    // evento click para abrir lightbox
-    img.addEventListener("click", () => {
-      abrirLightbox(index);
-    });
-
-    galeria.appendChild(img);
+  img.addEventListener("click", () => {
+    indice = i;
+    mostrarImagen();
+    visor.style.display = "flex";
   });
-}
 
-// funcion para abrir el lightbox
-function abrirLightbox(indice) {
-  indiceActual = indice;
-  lightbox.style.display = "flex";
-  mostrarImagen();
-}
+  galeria.appendChild(img);
+});
 
-// funcion para mostrar imagen segun indice
+// mostrar imagen
 function mostrarImagen() {
-  imagenGrande.src = imagenes[indiceActual];
-
-  // actualizar contador
-  contador.textContent = (indiceActual + 1) + " / " + imagenes.length;
+  imagenGrande.src = imagenes[indice];
+  contador.textContent = (indice + 1) + " / " + imagenes.length;
 }
 
-// funcion para ir a la siguiente imagen
-function siguienteImagen() {
-  indiceActual++;
-
-  // si llega al final vuelve al inicio
-  if (indiceActual >= imagenes.length) {
-    indiceActual = 0;
-  }
-
+// boton siguiente
+botonSiguiente.addEventListener("click", () => {
+  indice++;
+  if (indice >= imagenes.length) indice = 0;
   mostrarImagen();
-}
+});
 
-// funcion para ir a la imagen anterior
-function anteriorImagen() {
-  indiceActual--;
-
-  // si baja de 0 va al final
-  if (indiceActual < 0) {
-    indiceActual = imagenes.length - 1;
-  }
-
+// boton anterior
+botonAnterior.addEventListener("click", () => {
+  indice--;
+  if (indice < 0) indice = imagenes.length - 1;
   mostrarImagen();
-}
+});
 
-// funcion para cerrar el lightbox
-function cerrarLightbox() {
-  lightbox.style.display = "none";
-}
+// boton cerrar
+botonCerrar.addEventListener("click", () => {
+  visor.style.display = "none";
+});
 
-// eventos de botones
-btnCerrar.addEventListener("click", cerrarLightbox);
-btnNext.addEventListener("click", siguienteImagen);
-btnPrev.addEventListener("click", anteriorImagen);
-
-// eventos de teclado
+// teclado
 document.addEventListener("keydown", (e) => {
-  if (lightbox.style.display === "flex") {
-    
-    // flecha derecha
+  if (visor.style.display === "flex") {
     if (e.key === "ArrowRight") {
-      siguienteImagen();
+      indice++;
+      if (indice >= imagenes.length) indice = 0;
+      mostrarImagen();
     }
 
-    // flecha izquierda
     if (e.key === "ArrowLeft") {
-      anteriorImagen();
+      indice--;
+      if (indice < 0) indice = imagenes.length - 1;
+      mostrarImagen();
     }
 
-    // tecla escape
     if (e.key === "Escape") {
-      cerrarLightbox();
+      visor.style.display = "none";
     }
   }
 });
-
-// cargar galeria al iniciar
-cargarGaleria();

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Galería Interactiva</title>
+  <title>Galeria de Imagenes</title>
 
   <!-- css -->
   <link rel="stylesheet" href="css/style.css">
@@ -13,43 +13,33 @@
 </head>
 <body>
 
-  <!-- header -->
+  <!-- encabezado -->
   <header>
-    <h1>Galería de Imágenes</h1>
-    <p>Explorá la colección interactiva</p>
+    <h1>Galeria de Imagenes</h1>
+    <p>haz click en una imagen</p>
   </header>
 
-  <!-- main -->
   <main>
-    
     <!-- galeria -->
-    <section class="galeria" id="galeria">
-      <!-- Las imágenes se cargan con js -->
-    </section>
-
+    <section id="galeria" class="galeria"></section>
   </main>
 
-  <!-- img mas grande -->
-  <div class="lightbox" id="lightbox">
+  <div id="visor" class="visor">
 
-    <!-- bton cerrar -->
-    <span class="cerrar" id="cerrar">&times;</span>
+    <span id="boton-cerrar" class="boton-cerrar">&times;</span>
 
-    <!-- imagen -->
-    <img class="lightbox-img" id="imagen-grande" src="" alt="Imagen ampliada">
+    <img id="imagen-grande" class="imagen-grande">
 
-    <!-- contador de img -->
-    <div class="contador" id="contador">1 / 9</div>
+    <div id="contador" class="contador"></div>
 
-    <!-- botones -->
-    <button class="prev" id="atras">&#10094;</button>
-    <button class="next" id="adelante">&#10095;</button>
+    <button id="boton-anterior" class="boton-anterior">&#10094;</button>
+
+    <button id="boton-siguiente" class="boton-siguiente">&#10095;</button>
 
   </div>
 
-  <!-- footer -->
   <footer>
-    <p>Galería Interactiva</p>
+    <p>2026 - galeria</p>
   </footer>
 
 </body>
