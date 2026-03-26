@@ -27,11 +27,18 @@ let indice = 0;
 imagenes.forEach((ruta, i) => {
   const img = document.createElement("img");
   img.src = ruta;
+  img.loading = "lazy";
+  img.alt = "Imagen " + (i + 1);
+  img.style.setProperty("--delay", (i * 60) + "ms");
+
+  img.addEventListener("load", () => {
+    img.classList.add("cargada");
+  });
 
   img.addEventListener("click", () => {
     indice = i;
     mostrarImagen();
-    visor.style.display = "flex";
+    abrirVisor();
   });
 
   galeria.appendChild(img);
@@ -39,46 +46,70 @@ imagenes.forEach((ruta, i) => {
 
 // mostrar imagen
 function mostrarImagen() {
+  imagenGrande.classList.remove("visible");
   imagenGrande.src = imagenes[indice];
   contador.textContent = (indice + 1) + " / " + imagenes.length;
 }
 
+function cambiarImagen(paso) {
+  indice = (indice + paso + imagenes.length) % imagenes.length;
+  mostrarImagen();
+}
+
+function abrirVisor() {
+  visor.style.display = "flex";
+  requestAnimationFrame(() => {
+    visor.classList.add("activo");
+  });
+}
+
+function cerrarVisor() {
+  visor.classList.remove("activo");
+  setTimeout(() => {
+    if (!visor.classList.contains("activo")) {
+      visor.style.display = "none";
+    }
+  }, 250);
+}
+
+imagenGrande.addEventListener("load", () => {
+  imagenGrande.classList.add("visible");
+});
+
 // boton siguiente
 botonSiguiente.addEventListener("click", () => {
-  indice++;
-  if (indice >= imagenes.length) indice = 0;
-  mostrarImagen();
+  cambiarImagen(1);
 });
 
 // boton anterior
 botonAnterior.addEventListener("click", () => {
-  indice--;
-  if (indice < 0) indice = imagenes.length - 1;
-  mostrarImagen();
+  cambiarImagen(-1);
 });
 
 // boton cerrar
 botonCerrar.addEventListener("click", () => {
-  visor.style.display = "none";
+  cerrarVisor();
+});
+
+visor.addEventListener("click", (e) => {
+  if (e.target === visor) {
+    cerrarVisor();
+  }
 });
 
 // teclado
 document.addEventListener("keydown", (e) => {
-  if (visor.style.display === "flex") {
+  if (visor.classList.contains("activo")) {
     if (e.key === "ArrowRight") {
-      indice++;
-      if (indice >= imagenes.length) indice = 0;
-      mostrarImagen();
+      cambiarImagen(1);
     }
 
     if (e.key === "ArrowLeft") {
-      indice--;
-      if (indice < 0) indice = imagenes.length - 1;
-      mostrarImagen();
+      cambiarImagen(-1);
     }
 
     if (e.key === "Escape") {
-      visor.style.display = "none";
+      cerrarVisor();
     }
   }
 });
