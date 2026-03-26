@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galería Interactiva</title>
+
+  <!-- css -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- js -->
+  <script src="js/principal.js" defer></script>
+</head>
+<body>
+
+  <!-- header -->
+  <header>
+    <h1>Galería de Imágenes</h1>
+    <p>Explorá la colección interactiva</p>
+  </header>
+
+  <!-- main -->
+  <main>
+    
+    <!-- galeria -->
+    <section class="galeria" id="galeria">
+      <!-- Las imágenes se cargan con js -->
+    </section>
+
+  </main>
+
+  <!-- img mas grande -->
+  <div class="lightbox" id="lightbox">
+
+    <!-- bton cerrar -->
+    <span class="cerrar" id="cerrar">&times;</span>
+
+    <!-- imagen -->
+    <img class="lightbox-img" id="imagen-grande" src="" alt="Imagen ampliada">
+
+    <!-- contador de img -->
+    <div class="contador" id="contador">1 / 9</div>
+
+    <!-- botones -->
+    <button class="prev" id="atras">&#10094;</button>
+    <button class="next" id="adelante">&#10095;</button>
+
+  </div>
+
+  <!-- footer -->
+  <footer>
+    <p>Galería Interactiva</p>
+  </footer>
+
+</body>
+</html>
